@@ -5,6 +5,10 @@ function createElement(HTML) {
 }
 
 class Counter {
+  _state = {
+    count: 0,
+  };
+
   constructor(Button) {
     this._Button = Button;
     this._init();
@@ -22,19 +26,39 @@ class Counter {
 				</div>`;
   }
 
+  _handlerMinus() {
+    this._setStateCount(this._state.count - 1);
+    this._render();
+  }
+
+  _handlerReset() {
+    this._setStateCount(0);
+    this._render();
+  }
+
+  _handlerPlus() {
+    this._setStateCount(this._state.count + 1);
+    this._render();
+  }
+
   _generateButtons() {
     const buttons = [
-      new this._Button({ text: "minus", type: "minus", disabled: false, handler: () => console.log("minus") }).element,
-      new this._Button({ text: "reset", type: "reset", disabled: false, handler: () => console.log("reset") }).element,
-      new this._Button({ text: "plus", type: "plus", disabled: false, handler: () => console.log("plus") }).element,
+      new this._Button({ text: "minus", type: "minus", disabled: false, handler: this._handlerMinus.bind(this) }).element,
+      new this._Button({ text: "reset", type: "reset", disabled: false, handler: this._handlerReset.bind(this) }).element,
+      new this._Button({ text: "plus", type: "plus", disabled: false, handler: this._handlerPlus.bind(this) }).element,
     ];
 
     return buttons;
   }
 
   _render() {
-    this._element.querySelector(".counter__buttons").textContent;
+    this._element.querySelector(".counter__buttons").textContent = '';
     this._element.querySelector(".counter__buttons").append(...this._generateButtons());
+    this._element.querySelector(".counter__title").textContent = this._state.count;
+  }
+
+  _setStateCount(value) {
+    this._state.count = value;
   }
 
   get element() {
