@@ -12,6 +12,7 @@ class Counter {
 
   _init() {
     this._element = createElement(this._getTemplate());
+    this._render();
   }
 
   _getTemplate() {
@@ -19,6 +20,21 @@ class Counter {
         <span class="counter__title">0</span>
         <div class="counter__buttons"></div>
 				</div>`;
+  }
+
+  _generateButtons() {
+    const buttons = [
+      new this._Button({ text: "minus", type: "minus", disabled: false, handler: () => console.log("minus") }).element,
+      new this._Button({ text: "reset", type: "reset", disabled: false, handler: () => console.log("reset") }).element,
+      new this._Button({ text: "plus", type: "plus", disabled: false, handler: () => console.log("plus") }).element,
+    ];
+
+    return buttons;
+  }
+
+  _render() {
+    this._element.querySelector(".counter__buttons").textContent;
+    this._element.querySelector(".counter__buttons").append(...this._generateButtons());
   }
 
   get element() {
